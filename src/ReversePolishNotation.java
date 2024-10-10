@@ -32,6 +32,7 @@ public class ReversePolishNotation {
      *                  else
      *                      Pushes Let to Stack
      *              </pre>
+     * @throws IllegalArgumentException Invalid Postfix
      * @return Solved Number
      */
     public static int evalulatePostfix(String input)
@@ -50,6 +51,8 @@ public class ReversePolishNotation {
                 sta.push(let);
         }
 
+        if (sta.size() > 1)
+            throw new IllegalArgumentException("invalid postfix expression");
         return Integer.parseInt(sta.pop());
     }
 
