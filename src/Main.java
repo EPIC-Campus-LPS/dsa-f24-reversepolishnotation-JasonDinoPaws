@@ -1,10 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        String infix = "(1 + 2 * 3) + (4 * 5 ^ 6) / 7";
+        String prefix = "/ + A B * + C * E B + C A";
+        String infix = ReversePolishNotation.PrefixtoInfix(prefix);
         String Post = ReversePolishNotation.infixToPostfix(infix);
 
+        System.out.println("Prefix: "+prefix);
         System.out.println("Infix: "+infix);
-        System.out.println("Postfix: "+Post); // 7 2 + 9 / 3 5 * -
-        System.out.println("Postfix Solved: "+ReversePolishNotation.evalulatePostfix("5 7 + 8 * * *")); // -14
+        System.out.println("Postfix: "+Post);
+        //System.out.println("Postfix Solved: "+ReversePolishNotation.evalulatePostfix(Post));
     }
 }

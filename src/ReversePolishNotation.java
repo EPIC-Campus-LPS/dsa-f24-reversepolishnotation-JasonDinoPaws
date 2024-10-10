@@ -67,8 +67,10 @@ public class ReversePolishNotation {
             return 1;
         else if (Op.equals("*") || Op.equals("/"))
             return 2;
-        else
+        else if (Op.equals("+") || Op.equals("-"))
             return 3;
+        else
+            return 0;
     }
     private static boolean OpIsHigher(String Op1, String Op2)
     {
@@ -131,5 +133,52 @@ public class ReversePolishNotation {
             out += sta.pop() + " ";
 
         return out;
+    }
+
+    public static String PrefixtoInfix(String input)
+    {
+        String out = "";
+        Stack sta = new Stack();
+
+        for (int i = 0; i < input.length(); i++) {
+            String let = input.substring(i, i + 1);
+            if (let.equals(" ")) continue;
+
+            if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^"))
+                sta.push(let);
+            else {
+                if (sta.size() > 2 && GetOpNum(sta.peek()) == 0)
+                {
+                    String Eq1 = sta.pop();
+                    String Op = sta.pop();
+
+                    if (GetOpNum(Eq1) != 0)
+                        sta.push("( "+Op+ " "+ Eq1 + " "+ let+ " )");
+                    else
+                        sta.push("( "+Eq1+ " "+ Op + " "+ let+ " )");
+
+                }
+                else
+                    sta.push(let);
+            }
+
+        }
+
+        while (sta.size() > 1)
+        {
+            String Eq2 = sta.pop();
+            String Eq1 = sta.pop();
+            String Op = sta.pop();
+
+            if (GetOpNum(Eq1) != 0)
+                sta.push("( "+Op+ " "+ Eq1 + " "+ Eq2+ " )");
+            else if (GetOpNum(Eq2) != 0)
+                sta.push("( "+Eq1+ " "+ Eq2 + " "+ Op+ " )");
+            else
+                sta.push("( "+Eq1+ " "+ Op + " "+ Eq2+ " )");
+        }
+
+        String last = sta.pop();
+        return last.substring(1,last.length()-2);
     }
 }
