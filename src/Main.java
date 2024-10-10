@@ -5,6 +5,6 @@ public class Main {
 
         System.out.println("Infix: "+infix);
         System.out.println("Postfix: "+Post); // 7 2 + 9 / 3 5 * -
-        System.out.println("Postfix Solved: "+ReversePolishNotation.evalulatePostfix("7 2 + 9 / 3 5 *")); // -14
+        System.out.println("Postfix Solved: "+ReversePolishNotation.evalulatePostfix("5 7 + 8 * * *")); // -14
     }
 }

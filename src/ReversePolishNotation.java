@@ -40,12 +40,17 @@ public class ReversePolishNotation {
         Stack sta = new Stack();
         String[] split = input.split(" ");
 
+
         for (String let : split)
         {
             if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^")) {
-                String N2 = sta.pop();
-                String N1 = sta.pop();
-                sta.push("" + combine(N1, N2, let));
+                if (sta.size() >= 2) {
+                    String N2 = sta.pop();
+                    String N1 = sta.pop();
+                    sta.push("" + combine(N1, N2, let));
+                }
+                else
+                    throw new IllegalArgumentException("invalid postfix expression");
             }
             else
                 sta.push(let);
