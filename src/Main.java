@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
         String prefix = "/ + A B * + C * E B + C A";
         String infix = ReversePolishNotation.PrefixtoInfix(prefix);
-        String Post = ReversePolishNotation.infixToPostfix("10 + ( 12 ^ ( 25 + 2 ) + 2 )");
+        String Post = ReversePolishNotation.infixToPostfix("a * b + c");
 
         System.out.println("Prefix: " + prefix);
         System.out.println("Infix: " + infix);

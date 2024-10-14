@@ -103,14 +103,6 @@ public class ReversePolishNotation {
      *             </pre>
      * @return Postfix
      */
-    public static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
     public static String infixToPostfix(String input)
     {
         String out = "";
@@ -128,7 +120,7 @@ public class ReversePolishNotation {
                         out += sta.pop() + " ";
 
                     sta.push(let);
-                } else if (isNumeric(let))
+                } else
                     out += let + " ";
             }
         }
