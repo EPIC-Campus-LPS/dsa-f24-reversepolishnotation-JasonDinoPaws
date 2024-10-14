@@ -102,10 +102,8 @@ public class ReversePolishNotation {
      *                      Loops threw the stack until one is lower/Equal to
      *                      Pushes let to the Stack
      *
-     *                  else if let is num or let is len of 1
+     *                  else 
      *                      Add Let to out
-     *                  else
-     *                      throws a IllegalArgumentException
      *              }
      *
      *             Adds whats left in the stack to the Out
@@ -143,10 +141,8 @@ public class ReversePolishNotation {
                         out += sta.pop() + " ";
 
                     sta.push(let);
-                } else if (isnum(let) || let.length() == 1)
+                } else
                     out += let + " ";
-                else
-                    throw new IllegalArgumentException("invalid postfix expression");
             }
 
             while (sta.size() > 0)
