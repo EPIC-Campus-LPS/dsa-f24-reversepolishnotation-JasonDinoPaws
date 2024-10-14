@@ -123,6 +123,12 @@ public class ReversePolishNotation {
             return false;
         }
     }
+    private static String whatis(String let)
+    {
+        if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("("))
+            return "op";
+        return "var";
+    }
     public static String infixToPostfix(String input)
     {
         String out = "";
@@ -131,14 +137,16 @@ public class ReversePolishNotation {
         int num = 0, ops = 0;
 
         try {
-            for (String let : split) {
+            for (int i = 0; i < split.length; i++) {
+                String let = split[i];
+
                 if (let.equals(")")) {
                     ops--;
                     while (!sta.peek().equals("("))
                         out += sta.pop() + " ";
                     sta.pop();
 
-                } else if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("(")) {
+                } else if (whatis(let) == "op") {
                     ops++;
                     while (sta.size() > 0 && OpIsHigher(let, sta.peek()))
                         out += sta.pop() + " ";
@@ -147,6 +155,9 @@ public class ReversePolishNotation {
                 } else {
                     num ++;
                     out += let + " ";
+
+                    if (i+1 < split.length && whatis(split[i+1]) == "var")
+                        throw new IllegalArgumentException("invalid postfix expression");
                 }
             }
 
