@@ -115,27 +115,22 @@ public class ReversePolishNotation {
     {
         String out = "";
         Stack sta = new Stack();
+        String[] split = input.split(" ");
 
-        for (int i = 0; i < input.length(); i++)
-        {
-            String let = input.substring(i,i+1);
-            if (let.equals(" ")) continue;
+        for (String let : split) {
+            if (!let.equals(" ")) {
+                if (let.equals(")")) {
+                    while (!sta.peek().equals("("))
+                        out += sta.pop() + " ";
+                    sta.pop();
+                } else if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("(")) {
+                    while (sta.size() > 0 && OpIsHigher(let, sta.peek()))
+                        out += sta.pop() + " ";
 
-
-            if (let.equals(")")) {
-                while (!sta.peek().equals("("))
-                    out += sta.pop() + " ";
-                sta.pop();
+                    sta.push(let);
+                } else if (isNumeric(let))
+                    out += let + " ";
             }
-            else if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("("))
-            {
-                while (sta.size() > 0 && OpIsHigher(let,sta.peek()))
-                    out += sta.pop() + " ";
-
-                sta.push(let);
-            }
-            else if (isNumeric(let))
-                out += let + " ";
         }
 
         while (sta.size() > 0)
