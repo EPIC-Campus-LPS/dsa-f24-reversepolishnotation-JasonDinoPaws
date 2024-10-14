@@ -102,7 +102,7 @@ public class ReversePolishNotation {
      *                      Loops threw the stack until one is lower/Equal to
      *                      Pushes let to the Stack
      *
-     *                  else 
+     *                  else
      *                      Add Let to out
      *              }
      *
@@ -128,21 +128,26 @@ public class ReversePolishNotation {
         String out = "";
         Stack sta = new Stack();
         String[] split = input.split(" ");
+        int num = 0, ops = 0;
 
         try {
             for (String let : split) {
                 if (let.equals(")")) {
+                    ops--;
                     while (!sta.peek().equals("("))
                         out += sta.pop() + " ";
                     sta.pop();
 
                 } else if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("(")) {
+                    ops++;
                     while (sta.size() > 0 && OpIsHigher(let, sta.peek()))
                         out += sta.pop() + " ";
 
                     sta.push(let);
-                } else
+                } else {
+                    num ++;
                     out += let + " ";
+                }
             }
 
             while (sta.size() > 0)
@@ -154,7 +159,7 @@ public class ReversePolishNotation {
         }
 
 
-        if (out.contains("("))
+        if (out.contains("(") || ops != (num-1))
             throw new IllegalArgumentException("invalid postfix expression");
         return out;
     }
