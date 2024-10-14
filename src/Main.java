@@ -4,9 +4,9 @@ public class Main {
         String infix = ReversePolishNotation.PrefixtoInfix(prefix);
         String Post = ReversePolishNotation.infixToPostfix(infix);
 
-        System.out.println("Prefix: "+prefix);
-        System.out.println("Infix: "+infix);
-        System.out.println("Postfix: "+Post);
-        //System.out.println("Postfix Solved: "+ReversePolishNotation.evalulatePostfix(Post));
+        System.out.println("Prefix: " + prefix);
+        System.out.println("Infix: " + infix);
+        System.out.println("Postfix: " + Post);
+        System.out.println("Postfix Solved: " + ReversePolishNotation.evalulatePostfix("7 11 + 9 /"));
     }
 }

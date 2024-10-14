@@ -84,8 +84,9 @@ public class ReversePolishNotation {
      *             <pre>
      *              Creates the out string
      *              Creates the Stack
+     *              Creates the Split by " " for the input
      *
-     *              Loops threw each character in the input
+     *              Loops threw each element in the split
      *                  Sets let to the char at i
      *                  if let is not " " continues else go's to the next Char
      *
@@ -102,6 +103,14 @@ public class ReversePolishNotation {
      *             </pre>
      * @return Postfix
      */
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
     public static String infixToPostfix(String input)
     {
         String out = "";
@@ -125,7 +134,7 @@ public class ReversePolishNotation {
 
                 sta.push(let);
             }
-            else
+            else if (isNumeric(let))
                 out += let + " ";
         }
 
@@ -139,29 +148,26 @@ public class ReversePolishNotation {
     {
         String out = "";
         Stack sta = new Stack();
+        String[] split = input.split(" ");
 
-        for (int i = 0; i < input.length(); i++) {
-            String let = input.substring(i, i + 1);
-            if (let.equals(" ")) continue;
-
-            if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^"))
-                sta.push(let);
-            else {
-                if (sta.size() > 2 && GetOpNum(sta.peek()) == 0)
-                {
-                    String Eq1 = sta.pop();
-                    String Op = sta.pop();
-
-                    if (GetOpNum(Eq1) != 0)
-                        sta.push("( "+Op+ " "+ Eq1 + " "+ let+ " )");
-                    else
-                        sta.push("( "+Eq1+ " "+ Op + " "+ let+ " )");
-
-                }
-                else
+        for (String let : split) {
+            if (!let.equals(" ")) {
+                if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^"))
                     sta.push(let);
-            }
+                else {
+                    if (sta.size() > 2 && GetOpNum(sta.peek()) == 0) {
+                        String Eq1 = sta.pop();
+                        String Op = sta.pop();
 
+                        if (GetOpNum(Eq1) != 0)
+                            sta.push("( " + Op + " " + Eq1 + " " + let + " )");
+                        else
+                            sta.push("( " + Eq1 + " " + Op + " " + let + " )");
+
+                    } else
+                        sta.push(let);
+                }
+            }
         }
 
         while (sta.size() > 1)
