@@ -28,9 +28,15 @@ public class ReversePolishNotation {
      *
      *              For String Let : split
      *                  if Let == +, -, *, /, ^
-     *                      Pushes to Stack N1 Let N2
+     *                      if the length of the Stack is grather than 1
+     *                          Pushes to Stack N1 Let N2
+     *                      else
+     *                          throws a IllegalArgumentException
      *                  else
      *                      Pushes Let to Stack
+     *
+     *              if Stack is grater than 1
+     *                  throws a IllegalArgumentException
      *              </pre>
      * @throws IllegalArgumentException Invalid Postfix
      * @return Solved Number
@@ -39,7 +45,6 @@ public class ReversePolishNotation {
     {
         Stack sta = new Stack();
         String[] split = input.split(" ");
-
 
         for (String let : split)
         {
@@ -86,6 +91,7 @@ public class ReversePolishNotation {
      *              Creates the Stack
      *              Creates the Split by " " for the input
      *
+     *              try {
      *              Loops threw each element in the split
      *                  Sets let to the char at i
      *                  if let is not " " continues else go's to the next Char
@@ -96,38 +102,64 @@ public class ReversePolishNotation {
      *                      Loops threw the stack until one is lower/Equal to
      *                      Pushes let to the Stack
      *
-     *                  else
+     *                  else if let is num or let is len of 1
      *                      Add Let to out
+     *                  else
+     *                      throws a IllegalArgumentException
+     *              }
      *
      *             Adds whats left in the stack to the Out
+     *
+     *              if Array Index Error throws a IllegalArgumentException
+     *              checks if there is a "(" in the out and throws a IllegalArgumentException
      *             </pre>
      * @return Postfix
      */
+    private static boolean isnum(String input)
+    {
+        try {
+            Integer.parseInt(input);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
     public static String infixToPostfix(String input)
     {
         String out = "";
         Stack sta = new Stack();
         String[] split = input.split(" ");
 
-        for (String let : split) {
-            if (!let.equals(" ")) {
+        try {
+            for (String let : split) {
                 if (let.equals(")")) {
                     while (!sta.peek().equals("("))
                         out += sta.pop() + " ";
                     sta.pop();
+
                 } else if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("(")) {
                     while (sta.size() > 0 && OpIsHigher(let, sta.peek()))
                         out += sta.pop() + " ";
 
                     sta.push(let);
-                } else
+                } else if (isnum(let) || let.length() == 1)
                     out += let + " ";
+                else
+                    throw new IllegalArgumentException("invalid postfix expression");
             }
+
+            while (sta.size() > 0)
+                out += sta.pop() + " ";
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            throw new IllegalArgumentException("invalid postfix expression");
         }
 
-        while (sta.size() > 0)
-            out += sta.pop() + " ";
 
+        if (out.contains("("))
+            throw new IllegalArgumentException("invalid postfix expression");
         return out;
     }
 
