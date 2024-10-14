@@ -41,7 +41,7 @@ public class ReversePolishNotation {
      * @throws IllegalArgumentException Invalid Postfix
      * @return Solved Number
      */
-    public static int evalulatePostfix(String input)
+    public static int evaluatePostfix(String input)
     {
         Stack sta = new Stack();
         String[] split = input.split(" ");
@@ -125,7 +125,7 @@ public class ReversePolishNotation {
     }
     private static String whatis(String let)
     {
-        if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^") || let.equals("("))
+        if (let.equals("+") || let.equals("-") || let.equals("*") || let.equals("/") || let.equals("^"))
             return "op";
         return "var";
     }
@@ -146,18 +146,18 @@ public class ReversePolishNotation {
                         out += sta.pop() + " ";
                     sta.pop();
 
-                } else if (whatis(let) == "op") {
+                } else if (whatis(let) == "op" || let.equals("(")) {
                     ops++;
                     while (sta.size() > 0 && OpIsHigher(let, sta.peek()))
                         out += sta.pop() + " ";
 
                     sta.push(let);
+                    if (i+1 < split.length && whatis(split[i+1]).equals("op"))
+                        throw new IllegalArgumentException("invalid postfix expression "+ let + "|"+split[i+1]);
                 } else {
                     num ++;
                     out += let + " ";
 
-                    if (i+1 < split.length && whatis(split[i+1]) == "var")
-                        throw new IllegalArgumentException("invalid postfix expression");
                 }
             }
 
